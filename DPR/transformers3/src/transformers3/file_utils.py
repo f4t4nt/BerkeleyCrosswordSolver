@@ -189,7 +189,7 @@ def add_end_docstrings(*docstr):
 PT_TOKEN_CLASSIFICATION_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import torch
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -205,7 +205,7 @@ PT_TOKEN_CLASSIFICATION_SAMPLE = r"""
 PT_QUESTION_ANSWERING_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import torch
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -222,7 +222,7 @@ PT_QUESTION_ANSWERING_SAMPLE = r"""
 PT_SEQUENCE_CLASSIFICATION_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import torch
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -237,7 +237,7 @@ PT_SEQUENCE_CLASSIFICATION_SAMPLE = r"""
 PT_MASKED_LM_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import torch
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -252,7 +252,7 @@ PT_MASKED_LM_SAMPLE = r"""
 PT_BASE_MODEL_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import torch
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -267,7 +267,7 @@ PT_BASE_MODEL_SAMPLE = r"""
 PT_MULTIPLE_CHOICE_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import torch
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -289,7 +289,7 @@ PT_CAUSAL_LM_SAMPLE = r"""
     Example::
 
         >>> import torch
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
         >>> model = {model_class}.from_pretrained('{checkpoint}')
@@ -302,7 +302,7 @@ PT_CAUSAL_LM_SAMPLE = r"""
 TF_TOKEN_CLASSIFICATION_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import tensorflow as tf
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -319,7 +319,7 @@ TF_TOKEN_CLASSIFICATION_SAMPLE = r"""
 TF_QUESTION_ANSWERING_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import tensorflow as tf
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -336,7 +336,7 @@ TF_QUESTION_ANSWERING_SAMPLE = r"""
 TF_SEQUENCE_CLASSIFICATION_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import tensorflow as tf
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -351,7 +351,7 @@ TF_SEQUENCE_CLASSIFICATION_SAMPLE = r"""
 
 TF_MASKED_LM_SAMPLE = r"""
     Example::
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import tensorflow as tf
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -366,7 +366,7 @@ TF_MASKED_LM_SAMPLE = r"""
 TF_BASE_MODEL_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import tensorflow as tf
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -381,7 +381,7 @@ TF_BASE_MODEL_SAMPLE = r"""
 TF_MULTIPLE_CHOICE_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import tensorflow as tf
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')
@@ -402,7 +402,7 @@ TF_MULTIPLE_CHOICE_SAMPLE = r"""
 TF_CAUSAL_LM_SAMPLE = r"""
     Example::
 
-        >>> from transformers3 import {tokenizer_class}, {model_class}
+        >>> from DPR.transformers3.src.transformers3 import {tokenizer_class}, {model_class}
         >>> import tensorflow as tf
 
         >>> tokenizer = {tokenizer_class}.from_pretrained('{checkpoint}')

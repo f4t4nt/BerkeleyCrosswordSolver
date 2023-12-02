@@ -963,7 +963,7 @@ class XLMForQuestionAnswering(XLMPreTrainedModel):
 
     Example::
 
-        >>> from transformers3 import XLMTokenizer, XLMForQuestionAnswering
+        >>> from DPR.transformers3.src.transformers3 import XLMTokenizer, XLMForQuestionAnswering
         >>> import torch
 
         >>> tokenizer = XLMTokenizer.from_pretrained('xlm-mlm-en-2048')

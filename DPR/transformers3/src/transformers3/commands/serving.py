@@ -2,9 +2,9 @@ import logging
 from argparse import ArgumentParser, Namespace
 from typing import Any, List, Optional
 
-from transformers3 import Pipeline
-from transformers3.commands import BaseTransformersCLICommand
-from transformers3.pipelines import SUPPORTED_TASKS, pipeline
+from DPR.transformers3.src.transformers3 import Pipeline
+from DPR.transformers3.src.transformers3.commands import BaseTransformersCLICommand
+from DPR.transformers3.src.transformers3.pipelines import SUPPORTED_TASKS, pipeline
 
 
 try:

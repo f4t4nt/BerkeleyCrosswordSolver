@@ -22,7 +22,7 @@ import pickle
 import numpy as np
 import torch
 
-from transformers3 import ReformerConfig, ReformerModelWithLMHead
+from DPR.transformers3.src.transformers3 import ReformerConfig, ReformerModelWithLMHead
 
 
 logging.basicConfig(level=logging.INFO)

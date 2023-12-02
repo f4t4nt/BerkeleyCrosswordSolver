@@ -11,8 +11,8 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
-from transformers3 import MarianConfig, MarianMTModel, MarianTokenizer
-from transformers3.hf_api import HfApi
+from DPR.transformers3.src.transformers3 import MarianConfig, MarianMTModel, MarianTokenizer
+from DPR.transformers3.src.transformers3.hf_api import HfApi
 
 
 def remove_prefix(text: str, prefix: str):

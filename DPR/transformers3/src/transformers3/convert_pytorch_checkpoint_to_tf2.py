@@ -19,7 +19,7 @@ import argparse
 import logging
 import os
 
-from transformers3 import (
+from DPR.transformers3.src.transformers3 import (
     ALBERT_PRETRAINED_CONFIG_ARCHIVE_MAP,
     BERT_PRETRAINED_CONFIG_ARCHIVE_MAP,
     CAMEMBERT_PRETRAINED_CONFIG_ARCHIVE_MAP,
@@ -74,13 +74,13 @@ from transformers3 import (
     is_torch_available,
     load_pytorch_checkpoint_in_tf2_model,
 )
-from transformers3.file_utils import hf_bucket_url
+from DPR.transformers3.src.transformers3.file_utils import hf_bucket_url
 
 
 if is_torch_available():
     import torch
     import numpy as np
-    from transformers3 import (
+    from DPR.transformers3.src.transformers3 import (
         BertForPreTraining,
         BertForQuestionAnswering,
         BertForSequenceClassification,

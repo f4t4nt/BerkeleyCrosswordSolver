@@ -2,9 +2,9 @@ import os
 from argparse import ArgumentParser, Namespace
 from logging import getLogger
 
-from transformers3 import SingleSentenceClassificationProcessor as Processor
-from transformers3 import TextClassificationPipeline, is_tf_available, is_torch_available
-from transformers3.commands import BaseTransformersCLICommand
+from DPR.transformers3.src.transformers3 import SingleSentenceClassificationProcessor as Processor
+from DPR.transformers3.src.transformers3 import TextClassificationPipeline, is_tf_available, is_torch_available
+from DPR.transformers3.src.transformers3.commands import BaseTransformersCLICommand
 
 
 if not is_tf_available() and not is_torch_available():

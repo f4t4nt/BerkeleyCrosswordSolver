@@ -780,7 +780,7 @@ class TFBertForPreTraining(TFBertPreTrainedModel):
     Examples::
 
         import tensorflow as tf
-        from transformers3 import BertTokenizer, TFBertForPreTraining
+        from DPR.transformers3.src.transformers3 import BertTokenizer, TFBertForPreTraining
 
         tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         model = TFBertForPreTraining.from_pretrained('bert-base-uncased')
@@ -875,7 +875,7 @@ class TFBertForNextSentencePrediction(TFBertPreTrainedModel):
     Examples::
 
         import tensorflow as tf
-        from transformers3 import BertTokenizer, TFBertForNextSentencePrediction
+        from DPR.transformers3.src.transformers3 import BertTokenizer, TFBertForNextSentencePrediction
 
         tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         model = TFBertForNextSentencePrediction.from_pretrained('bert-base-uncased')

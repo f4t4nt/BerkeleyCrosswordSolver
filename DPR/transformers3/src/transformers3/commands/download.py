@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 
-from transformers3.commands import BaseTransformersCLICommand
+from DPR.transformers3.src.transformers3.commands import BaseTransformersCLICommand
 
 
 def download_command_factory(args):
@@ -26,7 +26,7 @@ class DownloadCommand(BaseTransformersCLICommand):
         self._force = force
 
     def run(self):
-        from transformers3 import AutoModel, AutoTokenizer
+        from DPR.transformers3.src.transformers3 import AutoModel, AutoTokenizer
 
         AutoModel.from_pretrained(self._model, cache_dir=self._cache, force_download=self._force)
         AutoTokenizer.from_pretrained(self._model, cache_dir=self._cache, force_download=self._force)

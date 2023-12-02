@@ -25,7 +25,7 @@ class MarianTokenizer(PreTrainedTokenizer):
 
     Examples::
 
-        >>> from transformers3 import MarianTokenizer
+        >>> from DPR.transformers3.src.transformers3 import MarianTokenizer
         >>> tok = MarianTokenizer.from_pretrained('Helsinki-NLP/opus-mt-en-de')
         >>> src_texts = [ "I am a small frog.", "Tom asked his teacher for advice."]
         >>> tgt_texts = ["Ich bin ein kleiner Frosch.", "Tom bat seinen Lehrer um Rat."]  # optional

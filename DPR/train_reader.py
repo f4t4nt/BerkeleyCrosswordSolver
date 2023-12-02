@@ -22,16 +22,16 @@ from typing import List
 import numpy as np
 import torch
 
-from dpr.data.qa_validation import exact_match_score
-from dpr.data.reader_data import (
+from DPR.dpr.data.qa_validation import exact_match_score
+from DPR.dpr.data.reader_data import (
     ReaderSample,
     get_best_spans,
     SpanPrediction,
     convert_retriever_results,
 )
-from dpr.models import init_reader_components
-from dpr.models.reader import create_reader_input, ReaderBatch, compute_loss
-from dpr.options import (
+from DPR.dpr.models import init_reader_components
+from DPR.dpr.models.reader import create_reader_input, ReaderBatch, compute_loss
+from DPR.dpr.options import (
     add_encoder_params,
     setup_args_gpu,
     set_seed,
@@ -42,12 +42,12 @@ from dpr.options import (
     add_tokenizer_params,
     print_args,
 )
-from dpr.utils.data_utils import (
+from DPR.dpr.utils.data_utils import (
     ShardedDataIterator,
     read_serialized_data_from_files,
     Tensorizer,
 )
-from dpr.utils.model_utils import (
+from DPR.dpr.utils.model_utils import (
     get_schedule_linear,
     load_states_from_checkpoint,
     move_to_device,

@@ -25,7 +25,7 @@ from copy import deepcopy
 
 # from utils import puz_to_json
 
-# import load
+import load
 import models
 # import random
 import pickle

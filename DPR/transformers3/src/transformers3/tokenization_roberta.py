@@ -69,7 +69,7 @@ class RobertaTokenizer(GPT2Tokenizer):
 
     ::
 
-        >>> from transformers3 import RobertaTokenizer
+        >>> from DPR.transformers3.src.transformers3 import RobertaTokenizer
         >>> tokenizer = RobertaTokenizer.from_pretrained("roberta-base")
         >>> tokenizer("Hello world")['input_ids']
         [0, 31414, 232, 328, 2]
@@ -268,7 +268,7 @@ class RobertaTokenizerFast(GPT2TokenizerFast):
 
     ::
 
-        >>> from transformers3 import RobertaTokenizerFast
+        >>> from DPR.transformers3.src.transformers3 import RobertaTokenizerFast
         >>> tokenizer = RobertaTokenizerFast.from_pretrained("roberta-base")
         >>> tokenizer("Hello world")['input_ids']
         [0, 31414, 232, 328, 2]

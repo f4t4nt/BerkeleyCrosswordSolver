@@ -30,7 +30,7 @@ import torch.nn.functional as F
 from torch import nn
 from torch.nn import CrossEntropyLoss, MSELoss
 
-from transformers3.modeling_bert import BertIntermediate
+from DPR.transformers3.src.transformers3.modeling_bert import BertIntermediate
 
 from .activations import gelu, gelu_new, swish
 from .configuration_mobilebert import MobileBertConfig
@@ -942,7 +942,7 @@ class MobileBertForPreTraining(MobileBertPreTrainedModel):
 
     Examples::
 
-        >>> from transformers3 import MobileBertTokenizer, MobileBertForPreTraining
+        >>> from DPR.transformers3.src.transformers3 import MobileBertTokenizer, MobileBertForPreTraining
         >>> import torch
 
         >>> tokenizer = MobileBertTokenizer.from_pretrained("google/mobilebert-uncased")
@@ -1155,7 +1155,7 @@ class MobileBertForNextSentencePrediction(MobileBertPreTrainedModel):
 
     Examples::
 
-        >>> from transformers3 import MobileBertTokenizer, MobileBertForNextSentencePrediction
+        >>> from DPR.transformers3.src.transformers3 import MobileBertTokenizer, MobileBertForNextSentencePrediction
         >>> import torch
 
         >>> tokenizer = MobileBertTokenizer.from_pretrained('google/mobilebert-uncased')

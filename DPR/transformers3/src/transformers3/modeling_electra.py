@@ -495,7 +495,7 @@ class ElectraForPreTraining(ElectraPreTrainedModel):
 
     Examples::
 
-        >>> from transformers3 import ElectraTokenizer, ElectraForPreTraining
+        >>> from DPR.transformers3.src.transformers3 import ElectraTokenizer, ElectraForPreTraining
         >>> import torch
 
         >>> tokenizer = ElectraTokenizer.from_pretrained('google/electra-small-discriminator')

@@ -701,7 +701,7 @@ class GPT2DoubleHeadsModel(GPT2PreTrainedModel):
     Examples::
 
         >>> import torch
-        >>> from transformers3 import GPT2Tokenizer, GPT2DoubleHeadsModel
+        >>> from DPR.transformers3.src.transformers3 import GPT2Tokenizer, GPT2DoubleHeadsModel
 
         >>> tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
         >>> model = GPT2DoubleHeadsModel.from_pretrained('gpt2')

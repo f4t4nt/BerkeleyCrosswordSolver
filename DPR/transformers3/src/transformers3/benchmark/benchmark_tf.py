@@ -24,7 +24,7 @@ import timeit
 from functools import wraps
 from typing import Callable, Optional
 
-from transformers3 import TF_MODEL_MAPPING, PretrainedConfig, is_py3nvml_available, is_tf_available
+from DPR.transformers3.src.transformers3 import TF_MODEL_MAPPING, PretrainedConfig, is_py3nvml_available, is_tf_available
 
 from .benchmark_utils import (
     Benchmark,

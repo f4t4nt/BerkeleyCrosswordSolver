@@ -840,7 +840,7 @@ class BertForPreTraining(BertPreTrainedModel):
 
     Examples::
 
-        >>> from transformers3 import BertTokenizer, BertForPreTraining
+        >>> from DPR.transformers3.src.transformers3 import BertTokenizer, BertForPreTraining
         >>> import torch
 
         >>> tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -949,7 +949,7 @@ class BertLMHeadModel(BertPreTrainedModel):
 
     Example::
 
-        >>> from transformers3 import BertTokenizer, BertLMHeadModel, BertConfig
+        >>> from DPR.transformers3.src.transformers3 import BertTokenizer, BertLMHeadModel, BertConfig
         >>> import torch
 
         >>> tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
@@ -1162,7 +1162,7 @@ class BertForNextSentencePrediction(BertPreTrainedModel):
 
     Examples::
 
-        >>> from transformers3 import BertTokenizer, BertForNextSentencePrediction
+        >>> from DPR.transformers3.src.transformers3 import BertTokenizer, BertForNextSentencePrediction
         >>> import torch
 
         >>> tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')

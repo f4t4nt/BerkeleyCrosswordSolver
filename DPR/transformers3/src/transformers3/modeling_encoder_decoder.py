@@ -56,12 +56,12 @@ class EncoderDecoderModel(PreTrainedModel):
         super().__init__(config)
 
         if encoder is None:
-            from transformers3 import AutoModel
+            from DPR.transformers3.src.transformers3 import AutoModel
 
             encoder = AutoModel.from_config(config.encoder)
 
         if decoder is None:
-            from transformers3 import AutoModelForCausalLM
+            from DPR.transformers3.src.transformers3 import AutoModelForCausalLM
 
             decoder = AutoModelForCausalLM.from_config(config.decoder)
 
@@ -126,7 +126,7 @@ class EncoderDecoderModel(PreTrainedModel):
 
         Examples::
 
-            >>> from transformers3 import EncoderDecoderModel
+            >>> from DPR.transformers3.src.transformers3 import EncoderDecoderModel
             >>> model = EncoderDecoderModel.from_encoder_decoder_pretrained('bert-base-uncased', 'bert-base-uncased') # initialize Bert2Bert
         """
 
@@ -159,7 +159,7 @@ class EncoderDecoderModel(PreTrainedModel):
             from .modeling_auto import AutoModelForCausalLM
 
             if "config" not in kwargs_decoder:
-                from transformers3 import AutoConfig
+                from DPR.transformers3.src.transformers3 import AutoConfig
 
                 decoder_config = AutoConfig.from_pretrained(decoder_pretrained_model_name_or_path)
                 if decoder_config.is_decoder is False:
@@ -243,7 +243,7 @@ class EncoderDecoderModel(PreTrainedModel):
 
         Examples::
 
-            >>> from transformers3 import EncoderDecoderModel, BertTokenizer
+            >>> from DPR.transformers3.src.transformers3 import EncoderDecoderModel, BertTokenizer
             >>> import torch
 
             >>> tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')

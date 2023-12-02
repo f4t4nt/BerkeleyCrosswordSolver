@@ -20,7 +20,7 @@ import argparse
 import pytorch_lightning as pl
 import torch
 
-from transformers3.modeling_longformer import LongformerForQuestionAnswering, LongformerModel
+from DPR.transformers3.src.transformers3.modeling_longformer import LongformerForQuestionAnswering, LongformerModel
 
 
 class LightningModel(pl.LightningModule):

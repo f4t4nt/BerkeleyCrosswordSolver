@@ -81,7 +81,7 @@ class AlbertConfig(PretrainedConfig):
 
         Example::
 
-            >>> from transformers3 import AlbertConfig, AlbertModel
+            >>> from DPR.transformers3.src.transformers3 import AlbertConfig, AlbertModel
             >>> # Initializing an ALBERT-xxlarge style configuration
             >>> albert_xxlarge_configuration = AlbertConfig()
 

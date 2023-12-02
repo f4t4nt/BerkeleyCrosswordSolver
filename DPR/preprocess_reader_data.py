@@ -11,9 +11,9 @@
 import argparse
 import logging
 
-from dpr.data.reader_data import convert_retriever_results
-from dpr.models import init_tenzorizer
-from dpr.options import (
+from DPR.dpr.data.reader_data import convert_retriever_results
+from DPR.dpr.models import init_tenzorizer
+from DPR.dpr.options import (
     print_args,
     add_encoder_params,
     add_reader_preprocessing_params,

@@ -5,3 +5,4 @@ __pycache__/
 demo/*.json
 285/
 *.pkl
+*.prof

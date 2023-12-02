@@ -77,7 +77,7 @@ class BartConfig(PretrainedConfig):
 
             Examples::
 
-                >>> from transformers3 import BartConfig, BartModel
+                >>> from DPR.transformers3.src.transformers3 import BartConfig, BartModel
 
                 >>> config = BartConfig.from_pretrained('facebook/bart-large')
                 >>> model = BartModel(config)

@@ -24,14 +24,14 @@ import sys
 import torch
 
 import transformers.tokenization_transfo_xl as data_utils
-from transformers3 import (
+from DPR.transformers3.src.transformers3 import (
     CONFIG_NAME,
     WEIGHTS_NAME,
     TransfoXLConfig,
     TransfoXLLMHeadModel,
     load_tf_weights_in_transfo_xl,
 )
-from transformers3.tokenization_transfo_xl import CORPUS_NAME, VOCAB_FILES_NAMES
+from DPR.transformers3.src.transformers3.tokenization_transfo_xl import CORPUS_NAME, VOCAB_FILES_NAMES
 
 
 logging.basicConfig(level=logging.INFO)

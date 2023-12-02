@@ -790,7 +790,7 @@ class TFAlbertForPreTraining(TFAlbertPreTrainedModel):
 
     Examples::
         import tensorflow as tf
-        from transformers3 import AlbertTokenizer, TFAlbertForPreTraining
+        from DPR.transformers3.src.transformers3 import AlbertTokenizer, TFAlbertForPreTraining
         tokenizer = AlbertTokenizer.from_pretrained('albert-base-v2')
         model = TFAlbertForPreTraining.from_pretrained('albert-base-v2')
         input_ids = tf.constant(tokenizer.encode("Hello, my dog is cute", add_special_tokens=True))[None, :]  # Batch size 1

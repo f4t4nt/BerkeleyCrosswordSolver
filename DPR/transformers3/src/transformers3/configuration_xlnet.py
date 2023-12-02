@@ -113,7 +113,7 @@ class XLNetConfig(PretrainedConfig):
 
         Example::
 
-            >>> from transformers3 import XLNetConfig, XLNetModel
+            >>> from DPR.transformers3.src.transformers3 import XLNetConfig, XLNetModel
 
             >>> # Initializing a XLNet configuration
             >>> configuration = XLNetConfig()

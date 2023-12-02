@@ -20,7 +20,7 @@ import logging
 
 import torch
 
-from transformers3 import AlbertConfig, AlbertForPreTraining, load_tf_weights_in_albert
+from DPR.transformers3.src.transformers3 import AlbertConfig, AlbertForPreTraining, load_tf_weights_in_albert
 
 
 logging.basicConfig(level=logging.INFO)

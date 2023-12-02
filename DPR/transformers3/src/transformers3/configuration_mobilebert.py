@@ -85,7 +85,7 @@ class MobileBertConfig(PretrainedConfig):
 
         Example:
 
-            >>> from transformers3 import MobileBertModel, MobileBertConfig
+            >>> from DPR.transformers3.src.transformers3 import MobileBertModel, MobileBertConfig
 
             >>> # Initializing a MobileBERT configuration
             >>> configuration = MobileBertConfig()

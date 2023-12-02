@@ -95,7 +95,7 @@ class BertConfig(PretrainedConfig):
 
         Example::
 
-            >>> from transformers3 import BertModel, BertConfig
+            >>> from DPR.transformers3.src.transformers3 import BertModel, BertConfig
 
             >>> # Initializing a BERT bert-base-uncased style configuration
             >>> configuration = BertConfig()

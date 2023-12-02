@@ -42,7 +42,7 @@ class EncoderDecoderConfig(PretrainedConfig):
 
         Example::
 
-            >>> from transformers3 import BertConfig, EncoderDecoderConfig, EncoderDecoderModel
+            >>> from DPR.transformers3.src.transformers3 import BertConfig, EncoderDecoderConfig, EncoderDecoderModel
 
             >>> # Initializing a BERT bert-base-uncased style configuration
             >>> config_encoder = BertConfig()
@@ -69,7 +69,7 @@ class EncoderDecoderConfig(PretrainedConfig):
         decoder_config = kwargs.pop("decoder")
         decoder_model_type = decoder_config.pop("model_type")
 
-        from transformers3 import AutoConfig
+        from DPR.transformers3.src.transformers3 import AutoConfig
 
         self.encoder = AutoConfig.for_model(encoder_model_type, **encoder_config)
         self.decoder = AutoConfig.for_model(decoder_model_type, **decoder_config)

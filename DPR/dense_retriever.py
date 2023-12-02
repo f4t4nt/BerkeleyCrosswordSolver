@@ -25,9 +25,9 @@ import torch
 from torch import Tensor as T
 from torch import nn
 
-from dpr.data.qa_validation import calculate_matches
-from dpr.models import init_biencoder_components
-from dpr.options import (
+from DPR.dpr.data.qa_validation import calculate_matches
+from DPR.dpr.models import init_biencoder_components
+from DPR.dpr.options import (
     add_encoder_params,
     setup_args_gpu,
     print_args,
@@ -35,13 +35,13 @@ from dpr.options import (
     add_tokenizer_params,
     add_cuda_params,
 )
-from dpr.utils.data_utils import Tensorizer
-from dpr.utils.model_utils import (
+from DPR.dpr.utils.data_utils import Tensorizer
+from DPR.dpr.utils.model_utils import (
     setup_for_distributed_mode,
     get_model_obj,
     load_states_from_checkpoint,
 )
-from dpr.indexer.faiss_indexers import (
+from DPR.dpr.indexer.faiss_indexers import (
     DenseIndexer,
     DenseHNSWFlatIndexer,
     DenseFlatIndexer,

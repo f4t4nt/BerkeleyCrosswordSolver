@@ -25,9 +25,9 @@ from typing import Tuple
 from torch import nn
 from torch import Tensor as T
 
-from dpr.models import init_biencoder_components
-from dpr.models.biencoder import BiEncoder, BiEncoderNllLoss, BiEncoderBatch
-from dpr.options import (
+from DPR.dpr.models import init_biencoder_components
+from DPR.dpr.models.biencoder import BiEncoder, BiEncoderNllLoss, BiEncoderBatch
+from DPR.dpr.options import (
     add_encoder_params,
     add_training_params,
     setup_args_gpu,
@@ -37,13 +37,13 @@ from dpr.options import (
     add_tokenizer_params,
     set_encoder_params_from_state,
 )
-from dpr.utils.data_utils import (
+from DPR.dpr.utils.data_utils import (
     ShardedDataIterator,
     read_data_from_json_files,
     Tensorizer,
 )
-from dpr.utils.dist_utils import all_gather_list
-from dpr.utils.model_utils import (
+from DPR.dpr.utils.dist_utils import all_gather_list
+from DPR.dpr.utils.model_utils import (
     setup_for_distributed_mode,
     move_to_device,
     get_schedule_linear,

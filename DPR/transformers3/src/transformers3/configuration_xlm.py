@@ -142,7 +142,7 @@ class XLMConfig(PretrainedConfig):
 
         Example::
 
-            >>> from transformers3 import XLMConfig, XLMModel
+            >>> from DPR.transformers3.src.transformers3 import XLMConfig, XLMModel
 
             >>> # Initializing a XLM configuration
             >>> configuration = XLMConfig()

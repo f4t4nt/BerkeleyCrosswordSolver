@@ -22,7 +22,7 @@ import logging
 import timeit
 from typing import Callable, Optional
 
-from transformers3 import (
+from DPR.transformers3.src.transformers3 import (
     MODEL_MAPPING,
     MODEL_WITH_LM_HEAD_MAPPING,
     PretrainedConfig,

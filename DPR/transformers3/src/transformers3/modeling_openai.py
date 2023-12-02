@@ -633,7 +633,7 @@ class OpenAIGPTDoubleHeadsModel(OpenAIGPTPreTrainedModel):
 
     Examples::
 
-        from transformers3 import OpenAIGPTTokenizer, OpenAIGPTDoubleHeadsModel
+        from DPR.transformers3.src.transformers3 import OpenAIGPTTokenizer, OpenAIGPTDoubleHeadsModel
         import torch
 
         tokenizer = OpenAIGPTTokenizer.from_pretrained('openai-gpt')

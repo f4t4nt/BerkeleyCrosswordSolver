@@ -938,7 +938,7 @@ class TFXLNetLMHeadModel(TFXLNetPreTrainedModel):
 
         import tensorflow as tf
         import numpy as np
-        from transformers3 import XLNetTokenizer, TFXLNetLMHeadModel
+        from DPR.transformers3.src.transformers3 import XLNetTokenizer, TFXLNetLMHeadModel
 
         tokenizer = XLNetTokenizer.from_pretrained('xlnet-large-cased')
         model = TFXLNetLMHeadModel.from_pretrained('xlnet-large-cased')

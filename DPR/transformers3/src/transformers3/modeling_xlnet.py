@@ -1079,7 +1079,7 @@ class XLNetLMHeadModel(XLNetPreTrainedModel):
 
     Examples::
 
-        from transformers3 import XLNetTokenizer, XLNetLMHeadModel
+        from DPR.transformers3.src.transformers3 import XLNetTokenizer, XLNetLMHeadModel
         import torch
 
         tokenizer = XLNetTokenizer.from_pretrained('xlnet-large-cased')
@@ -1639,7 +1639,7 @@ class XLNetForQuestionAnswering(XLNetPreTrainedModel):
 
         Example::
 
-            >>> from transformers3 import XLNetTokenizer, XLNetForQuestionAnswering
+            >>> from DPR.transformers3.src.transformers3 import XLNetTokenizer, XLNetForQuestionAnswering
             >>> import torch
 
             >>> tokenizer =  XLNetTokenizer.from_pretrained('xlnet-base-cased')

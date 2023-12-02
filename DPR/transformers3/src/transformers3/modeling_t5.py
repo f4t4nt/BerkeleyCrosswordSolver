@@ -928,7 +928,7 @@ class T5Model(T5PreTrainedModel):
 
         Example::
 
-            >>> from transformers3 import T5Tokenizer, T5Model
+            >>> from DPR.transformers3.src.transformers3 import T5Tokenizer, T5Model
 
             >>> tokenizer = T5Tokenizer.from_pretrained('t5-small')
             >>> model = T5Model.from_pretrained('t5-small')
@@ -1071,7 +1071,7 @@ class T5ForConditionalGeneration(T5PreTrainedModel):
 
     Examples::
 
-        >>> from transformers3 import T5Tokenizer, T5ForConditionalGeneration
+        >>> from DPR.transformers3.src.transformers3 import T5Tokenizer, T5ForConditionalGeneration
 
         >>> tokenizer = T5Tokenizer.from_pretrained('t5-small')
         >>> model = T5ForConditionalGeneration.from_pretrained('t5-small')

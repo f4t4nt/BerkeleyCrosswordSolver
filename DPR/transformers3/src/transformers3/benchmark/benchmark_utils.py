@@ -18,8 +18,8 @@ from multiprocessing import Pipe, Process, Queue
 from multiprocessing.connection import Connection
 from typing import Callable, Iterable, List, NamedTuple, Optional, Union
 
-from transformers3 import AutoConfig, PretrainedConfig
-from transformers3 import __version__ as version
+from DPR.transformers3.src.transformers3 import AutoConfig, PretrainedConfig
+from DPR.transformers3.src.transformers3 import __version__ as version
 
 from ..file_utils import is_psutil_available, is_py3nvml_available, is_tf_available, is_torch_available
 from .benchmark_args_utils import BenchmarkArguments

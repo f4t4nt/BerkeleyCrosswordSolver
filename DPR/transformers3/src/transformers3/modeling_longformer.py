@@ -938,7 +938,7 @@ class LongformerModel(LongformerPreTrainedModel):
     Examples::
 
         >>> import torch
-        >>> from transformers3 import LongformerModel, LongformerTokenizer
+        >>> from DPR.transformers3.src.transformers3 import LongformerModel, LongformerTokenizer
 
         >>> model = LongformerModel.from_pretrained('allenai/longformer-base-4096')
         >>> tokenizer = LongformerTokenizer.from_pretrained('allenai/longformer-base-4096')
@@ -1079,7 +1079,7 @@ class LongformerForMaskedLM(LongformerPreTrainedModel):
     Examples::
 
         >>> import torch
-        >>> from transformers3 import LongformerForMaskedLM, LongformerTokenizer
+        >>> from DPR.transformers3.src.transformers3 import LongformerForMaskedLM, LongformerTokenizer
 
         >>> model = LongformerForMaskedLM.from_pretrained('allenai/longformer-base-4096')
         >>> tokenizer = LongformerTokenizer.from_pretrained('allenai/longformer-base-4096')
@@ -1296,7 +1296,7 @@ class LongformerForQuestionAnswering(BertPreTrainedModel):
 
     Examples::
 
-        >>> from transformers3 import LongformerTokenizer, LongformerForQuestionAnswering
+        >>> from DPR.transformers3.src.transformers3 import LongformerTokenizer, LongformerForQuestionAnswering
         >>> import torch
 
         >>> tokenizer = LongformerTokenizer.from_pretrained("allenai/longformer-large-4096-finetuned-triviaqa")

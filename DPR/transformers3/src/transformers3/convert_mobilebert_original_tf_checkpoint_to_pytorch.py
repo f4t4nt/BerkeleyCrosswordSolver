@@ -3,7 +3,7 @@ import logging
 
 import torch
 
-from transformers3 import MobileBertConfig, MobileBertForPreTraining, load_tf_weights_in_mobilebert
+from DPR.transformers3.src.transformers3 import MobileBertConfig, MobileBertForPreTraining, load_tf_weights_in_mobilebert
 
 
 logging.basicConfig(level=logging.INFO)

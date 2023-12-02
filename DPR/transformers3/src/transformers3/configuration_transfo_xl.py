@@ -100,7 +100,7 @@ class TransfoXLConfig(PretrainedConfig):
 
         Example::
 
-            >>> from transformers3 import TransfoXLConfig, TransfoXLModel
+            >>> from DPR.transformers3.src.transformers3 import TransfoXLConfig, TransfoXLModel
 
             >>> # Initializing a Transformer XL configuration
             >>> configuration = TransfoXLConfig()

@@ -1803,7 +1803,7 @@ def pipeline(
 
     Examples::
 
-        from transformers3 import pipeline, AutoModelForTokenClassification, AutoTokenizer
+        from DPR.transformers3.src.transformers3 import pipeline, AutoModelForTokenClassification, AutoTokenizer
 
         # Sentiment analysis pipeline
         pipeline('sentiment-analysis')

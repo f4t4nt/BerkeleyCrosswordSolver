@@ -67,7 +67,7 @@ class MBartTokenizer(XLMRobertaTokenizer):
 
     Examples::
 
-        >>> from transformers3 import MBartTokenizer
+        >>> from DPR.transformers3.src.transformers3 import MBartTokenizer
         >>> tokenizer = MBartTokenizer.from_pretrained('facebook/mbart-large-en-ro')
         >>> example_english_phrase = " UN Chief Says There Is No Military Solution in Syria"
         >>> expected_translation_romanian = "Şeful ONU declară că nu există o soluţie militară în Siria"

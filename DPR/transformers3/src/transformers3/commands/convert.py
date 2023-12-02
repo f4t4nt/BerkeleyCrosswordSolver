@@ -1,7 +1,7 @@
 from argparse import ArgumentParser, Namespace
 from logging import getLogger
 
-from transformers3.commands import BaseTransformersCLICommand
+from DPR.transformers3.src.transformers3.commands import BaseTransformersCLICommand
 
 
 def convert_command_factory(args: Namespace):
@@ -64,7 +64,7 @@ class ConvertCommand(BaseTransformersCLICommand):
     def run(self):
         if self._model_type == "albert":
             try:
-                from transformers3.convert_albert_original_tf_checkpoint_to_pytorch import (
+                from DPR.transformers3.src.transformers3.convert_albert_original_tf_checkpoint_to_pytorch import (
                     convert_tf_checkpoint_to_pytorch,
                 )
             except ImportError:
@@ -78,7 +78,7 @@ class ConvertCommand(BaseTransformersCLICommand):
             convert_tf_checkpoint_to_pytorch(self._tf_checkpoint, self._config, self._pytorch_dump_output)
         elif self._model_type == "bert":
             try:
-                from transformers3.convert_bert_original_tf_checkpoint_to_pytorch import (
+                from DPR.transformers3.src.transformers3.convert_bert_original_tf_checkpoint_to_pytorch import (
                     convert_tf_checkpoint_to_pytorch,
                 )
             except ImportError:
@@ -91,14 +91,14 @@ class ConvertCommand(BaseTransformersCLICommand):
 
             convert_tf_checkpoint_to_pytorch(self._tf_checkpoint, self._config, self._pytorch_dump_output)
         elif self._model_type == "gpt":
-            from transformers3.convert_openai_original_tf_checkpoint_to_pytorch import (
+            from DPR.transformers3.src.transformers3.convert_openai_original_tf_checkpoint_to_pytorch import (
                 convert_openai_checkpoint_to_pytorch,
             )
 
             convert_openai_checkpoint_to_pytorch(self._tf_checkpoint, self._config, self._pytorch_dump_output)
         elif self._model_type == "transfo_xl":
             try:
-                from transformers3.convert_transfo_xl_original_tf_checkpoint_to_pytorch import (
+                from DPR.transformers3.src.transformers3.convert_transfo_xl_original_tf_checkpoint_to_pytorch import (
                     convert_transfo_xl_checkpoint_to_pytorch,
                 )
             except ImportError:
@@ -120,7 +120,7 @@ class ConvertCommand(BaseTransformersCLICommand):
             )
         elif self._model_type == "gpt2":
             try:
-                from transformers3.convert_gpt2_original_tf_checkpoint_to_pytorch import (
+                from DPR.transformers3.src.transformers3.convert_gpt2_original_tf_checkpoint_to_pytorch import (
                     convert_gpt2_checkpoint_to_pytorch,
                 )
             except ImportError:
@@ -134,7 +134,7 @@ class ConvertCommand(BaseTransformersCLICommand):
             convert_gpt2_checkpoint_to_pytorch(self._tf_checkpoint, self._config, self._pytorch_dump_output)
         elif self._model_type == "xlnet":
             try:
-                from transformers3.convert_xlnet_original_tf_checkpoint_to_pytorch import (
+                from DPR.transformers3.src.transformers3.convert_xlnet_original_tf_checkpoint_to_pytorch import (
                     convert_xlnet_checkpoint_to_pytorch,
                 )
             except ImportError:
@@ -149,7 +149,7 @@ class ConvertCommand(BaseTransformersCLICommand):
                 self._tf_checkpoint, self._config, self._pytorch_dump_output, self._finetuning_task_name
             )
         elif self._model_type == "xlm":
-            from transformers3.convert_xlm_original_pytorch_checkpoint_to_pytorch import (
+            from DPR.transformers3.src.transformers3.convert_xlm_original_pytorch_checkpoint_to_pytorch import (
                 convert_xlm_checkpoint_to_pytorch,
             )
 

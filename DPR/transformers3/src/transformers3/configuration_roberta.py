@@ -49,7 +49,7 @@ class RobertaConfig(BertConfig):
 
         Example::
 
-            >>> from transformers3 import RobertaConfig, RobertaModel
+            >>> from DPR.transformers3.src.transformers3 import RobertaConfig, RobertaModel
 
             >>> # Initializing a RoBERTa configuration
             >>> configuration = RobertaConfig()

@@ -15,7 +15,7 @@
 """PyTorch MarianMTModel model, ported from the Marian C++ repo."""
 
 
-from transformers3.modeling_bart import BartForConditionalGeneration
+from DPR.transformers3.src.transformers3.modeling_bart import BartForConditionalGeneration
 
 
 MARIAN_PRETRAINED_MODEL_ARCHIVE_LIST = [
@@ -31,7 +31,7 @@ class MarianMTModel(BartForConditionalGeneration):
 
     Examples::
 
-        >>> from transformers3 import MarianTokenizer, MarianMTModel
+        >>> from DPR.transformers3.src.transformers3 import MarianTokenizer, MarianMTModel
         >>> from typing import List
         >>> src = 'fr'  # source language
         >>> trg = 'en'  # target language

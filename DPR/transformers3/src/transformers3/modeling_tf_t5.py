@@ -925,7 +925,7 @@ class TFT5Model(TFT5PreTrainedModel):
 
     Examples::
 
-        >>> from transformers3 import T5Tokenizer, TFT5Model
+        >>> from DPR.transformers3.src.transformers3 import T5Tokenizer, TFT5Model
 
         >>> tokenizer = T5Tokenizer.from_pretrained('t5-small')
         >>> model = TFT5Model.from_pretrained('t5-small')
@@ -1066,7 +1066,7 @@ class TFT5ForConditionalGeneration(TFT5PreTrainedModel):
 
     Examples::
 
-        >>> from transformers3 import T5Tokenizer, TFT5ForConditionalGeneration
+        >>> from DPR.transformers3.src.transformers3 import T5Tokenizer, TFT5ForConditionalGeneration
 
         >>> tokenizer = T5Tokenizer.from_pretrained('t5-small')
         >>> model = TFT5ForConditionalGeneration.from_pretrained('t5-small')

@@ -2,7 +2,7 @@ import logging
 
 import tensorflow as tf
 
-from transformers3 import ElectraConfig
+from DPR.transformers3.src.transformers3 import ElectraConfig
 
 from .file_utils import add_code_sample_docstrings, add_start_docstrings, add_start_docstrings_to_callable
 from .modeling_tf_bert import ACT2FN, TFBertEncoder, TFBertPreTrainedModel
@@ -455,7 +455,7 @@ class TFElectraForPreTraining(TFElectraPreTrainedModel):
     Examples::
 
         import tensorflow as tf
-        from transformers3 import ElectraTokenizer, TFElectraForPreTraining
+        from DPR.transformers3.src.transformers3 import ElectraTokenizer, TFElectraForPreTraining
 
         tokenizer = ElectraTokenizer.from_pretrained('google/electra-small-discriminator')
         model = TFElectraForPreTraining.from_pretrained('google/electra-small-discriminator')

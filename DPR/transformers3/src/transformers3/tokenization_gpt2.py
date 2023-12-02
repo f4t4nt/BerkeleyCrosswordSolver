@@ -109,7 +109,7 @@ class GPT2Tokenizer(PreTrainedTokenizer):
 
     ::
 
-        >>> from transformers3 import GPT2Tokenizer
+        >>> from DPR.transformers3.src.transformers3 import GPT2Tokenizer
         >>> tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
         >>> tokenizer("Hello world")['input_ids']
         [15496, 995]
@@ -305,7 +305,7 @@ class GPT2TokenizerFast(PreTrainedTokenizerFast):
 
     ::
 
-        >>> from transformers3 import GPT2TokenizerFast
+        >>> from DPR.transformers3.src.transformers3 import GPT2TokenizerFast
         >>> tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
         >>> tokenizer("Hello world")['input_ids']
         [15496, 995]

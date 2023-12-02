@@ -639,7 +639,7 @@ class TFGPT2DoubleHeadsModel(TFGPT2PreTrainedModel):
     Examples::
 
         >>> import tensorflow as tf
-        >>> from transformers3 import GPT2Tokenizer, TFGPT2DoubleHeadsModel
+        >>> from DPR.transformers3.src.transformers3 import GPT2Tokenizer, TFGPT2DoubleHeadsModel
 
         >>> tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
         >>> model = TFGPT2DoubleHeadsModel.from_pretrained('gpt2')

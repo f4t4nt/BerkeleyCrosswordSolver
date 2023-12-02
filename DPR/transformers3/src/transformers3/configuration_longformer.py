@@ -49,7 +49,7 @@ class LongformerConfig(RobertaConfig):
 
         Example::
 
-            >>> from transformers3 import LongformerConfig, LongformerModel
+            >>> from DPR.transformers3.src.transformers3 import LongformerConfig, LongformerModel
 
             >>> # Initializing a Longformer configuration
             >>> configuration = LongformerConfig()

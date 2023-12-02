@@ -21,7 +21,7 @@ import os
 
 import torch
 
-from transformers3 import (
+from DPR.transformers3.src.transformers3 import (
     CONFIG_NAME,
     WEIGHTS_NAME,
     XLNetConfig,

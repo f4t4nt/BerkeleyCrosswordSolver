@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 from argparse import ArgumentParser
 
-from transformers3.commands.convert import ConvertCommand
-from transformers3.commands.download import DownloadCommand
-from transformers3.commands.env import EnvironmentCommand
-from transformers3.commands.run import RunCommand
-from transformers3.commands.serving import ServeCommand
-from transformers3.commands.user import UserCommands
+from DPR.transformers3.src.transformers3.commands.convert import ConvertCommand
+from DPR.transformers3.src.transformers3.commands.download import DownloadCommand
+from DPR.transformers3.src.transformers3.commands.env import EnvironmentCommand
+from DPR.transformers3.src.transformers3.commands.run import RunCommand
+from DPR.transformers3.src.transformers3.commands.serving import ServeCommand
+from DPR.transformers3.src.transformers3.commands.user import UserCommands
 
 
 def main():

@@ -907,7 +907,7 @@ class TFMobileBertForPreTraining(TFMobileBertPreTrainedModel):
     Examples::
 
         >>> import tensorflow as tf
-        >>> from transformers3 import MobileBertTokenizer, TFMobileBertForPreTraining
+        >>> from DPR.transformers3.src.transformers3 import MobileBertTokenizer, TFMobileBertForPreTraining
 
         >>> tokenizer = MobileBertTokenizer.from_pretrained('google/mobilebert-uncased')
         >>> model = TFMobileBertForPreTraining.from_pretrained('google/mobilebert-uncased')
@@ -1012,7 +1012,7 @@ class TFMobileBertForNextSentencePrediction(TFMobileBertPreTrainedModel):
     Examples::
 
         >>> import tensorflow as tf
-        >>> from transformers3 import MobileBertTokenizer, TFMobileBertForNextSentencePrediction
+        >>> from DPR.transformers3.src.transformers3 import MobileBertTokenizer, TFMobileBertForNextSentencePrediction
 
         >>> tokenizer = MobileBertTokenizer.from_pretrained('google/mobilebert-uncased')
         >>> model = TFMobileBertForNextSentencePrediction.from_pretrained('google/mobilebert-uncased')

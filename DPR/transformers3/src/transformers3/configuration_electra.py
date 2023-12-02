@@ -101,7 +101,7 @@ class ElectraConfig(PretrainedConfig):
 
         Example::
 
-            >>> from transformers3 import ElectraModel, ElectraConfig
+            >>> from DPR.transformers3.src.transformers3 import ElectraModel, ElectraConfig
 
             >>> # Initializing a ELECTRA electra-base-uncased style configuration
             >>> configuration = ElectraConfig()

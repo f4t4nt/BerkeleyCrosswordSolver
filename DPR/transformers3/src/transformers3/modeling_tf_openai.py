@@ -582,7 +582,7 @@ class TFOpenAIGPTDoubleHeadsModel(TFOpenAIGPTPreTrainedModel):
     Examples::
 
         >>> import tensorflow as tf
-        >>> from transformers3 import OpenAIGPTTokenizer, TFOpenAIGPTDoubleHeadsModel
+        >>> from DPR.transformers3.src.transformers3 import OpenAIGPTTokenizer, TFOpenAIGPTDoubleHeadsModel
 
         >>> tokenizer = OpenAIGPTTokenizer.from_pretrained('openai-gpt')
         >>> model = TFOpenAIGPTDoubleHeadsModel.from_pretrained('openai-gpt')

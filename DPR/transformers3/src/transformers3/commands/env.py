@@ -1,9 +1,9 @@
 import platform
 from argparse import ArgumentParser
 
-from transformers3 import __version__ as version
-from transformers3 import is_tf_available, is_torch_available
-from transformers3.commands import BaseTransformersCLICommand
+from DPR.transformers3.src.transformers3 import __version__ as version
+from DPR.transformers3.src.transformers3 import is_tf_available, is_torch_available
+from DPR.transformers3.src.transformers3.commands import BaseTransformersCLICommand
 
 
 def info_command_factory(_):

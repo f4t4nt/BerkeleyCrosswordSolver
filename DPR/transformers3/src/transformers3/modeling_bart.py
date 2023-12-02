@@ -66,7 +66,7 @@ BART_START_DOCSTRING = r"""
 BART_GENERATION_EXAMPLE = r"""
     Summarization example::
 
-        from transformers3 import BartTokenizer, BartForConditionalGeneration, BartConfig
+        from DPR.transformers3.src.transformers3 import BartTokenizer, BartForConditionalGeneration, BartConfig
 
         # see ``examples/summarization/bart/run_eval.py`` for a longer example
         model = BartForConditionalGeneration.from_pretrained('facebook/bart-large-cnn')
@@ -966,7 +966,7 @@ class BartForConditionalGeneration(PretrainedBartModel):
     Conditional generation example::
 
             # Mask filling only works for bart-large
-            from transformers3 import BartTokenizer, BartForConditionalGeneration
+            from DPR.transformers3.src.transformers3 import BartTokenizer, BartForConditionalGeneration
             tokenizer = BartTokenizer.from_pretrained('facebook/bart-large')
             TXT = "My friends are <mask> but they eat too many carbs."
 

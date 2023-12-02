@@ -882,7 +882,7 @@ class DistilBertForMultipleChoice(DistilBertPreTrainedModel):
 
     Examples::
 
-        >>> from transformers3 import DistilBertTokenizer, DistilBertForMultipleChoice
+        >>> from DPR.transformers3.src.transformers3 import DistilBertTokenizer, DistilBertForMultipleChoice
         >>> import torch
 
         >>> tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-cased')

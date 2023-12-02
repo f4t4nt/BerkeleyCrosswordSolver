@@ -3,9 +3,9 @@ from os import listdir, makedirs
 from os.path import abspath, dirname, exists
 from typing import Dict, List, Optional, Tuple
 
-from transformers3 import is_tf_available, is_torch_available
-from transformers3.pipelines import Pipeline, pipeline
-from transformers3.tokenization_utils import BatchEncoding
+from DPR.transformers3.src.transformers3 import is_tf_available, is_torch_available
+from DPR.transformers3.src.transformers3.pipelines import Pipeline, pipeline
+from DPR.transformers3.src.transformers3.tokenization_utils import BatchEncoding
 
 
 SUPPORTED_PIPELINES = [

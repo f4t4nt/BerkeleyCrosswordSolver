@@ -20,7 +20,7 @@ import logging
 
 import torch
 
-from transformers3 import ElectraConfig, ElectraForMaskedLM, ElectraForPreTraining, load_tf_weights_in_electra
+from DPR.transformers3.src.transformers3 import ElectraConfig, ElectraForMaskedLM, ElectraForPreTraining, load_tf_weights_in_electra
 
 
 logging.basicConfig(level=logging.INFO)

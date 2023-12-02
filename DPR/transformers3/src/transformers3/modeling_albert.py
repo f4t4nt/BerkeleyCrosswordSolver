@@ -648,7 +648,7 @@ class AlbertForPreTraining(AlbertPreTrainedModel):
 
     Examples::
 
-        >>> from transformers3 import AlbertTokenizer, AlbertForPreTraining
+        >>> from DPR.transformers3.src.transformers3 import AlbertTokenizer, AlbertForPreTraining
         >>> import torch
 
         >>> tokenizer = AlbertTokenizer.from_pretrained('albert-base-v2')

@@ -100,7 +100,7 @@ class GPT2Config(PretrainedConfig):
 
         Example::
 
-            >>> from transformers3 import GPT2Model, GPT2Config
+            >>> from DPR.transformers3.src.transformers3 import GPT2Model, GPT2Config
 
             >>> # Initializing a GPT2 configuration
             >>> configuration = GPT2Config()

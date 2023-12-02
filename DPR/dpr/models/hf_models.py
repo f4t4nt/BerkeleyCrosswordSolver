@@ -15,15 +15,25 @@ from typing import Tuple
 import torch
 from torch import Tensor as T
 from torch import nn
-from transformers3.modeling_bert import BertConfig, BertModel
-from transformers3.modeling_electra import ElectraConfig, ElectraModel
-from transformers3.modeling_roberta import RobertaConfig, RobertaModel
-from transformers3.optimization import AdamW
-from transformers3.tokenization_bert import BertTokenizer
-from transformers3.tokenization_roberta import RobertaTokenizer
-from transformers3.tokenization_electra import ElectraTokenizer
 
-from dpr.utils.data_utils import Tensorizer
+# from DPR.transformers3.src.transformers3.modeling_bert import BertConfig, BertModel
+# from DPR.transformers3.src.transformers3.modeling_electra import ElectraConfig, ElectraModel
+# from DPR.transformers3.src.transformers3.modeling_roberta import RobertaConfig, RobertaModel
+# from DPR.transformers3.src.transformers3.optimization import AdamW
+# from DPR.transformers3.src.transformers3.tokenization_bert import BertTokenizer
+# from DPR.transformers3.src.transformers3.tokenization_roberta import RobertaTokenizer
+# from DPR.transformers3.src.transformers3.tokenization_electra import ElectraTokenizer
+
+from DPR.transformers3.src.transformers3.modeling_bert import BertConfig, BertModel
+from DPR.transformers3.src.transformers3.modeling_electra import ElectraConfig, ElectraModel
+from DPR.transformers3.src.transformers3.modeling_roberta import RobertaConfig, RobertaModel
+from DPR.transformers3.src.transformers3.optimization import AdamW
+from DPR.transformers3.src.transformers3.tokenization_bert import BertTokenizer
+from DPR.transformers3.src.transformers3.tokenization_roberta import RobertaTokenizer
+from DPR.transformers3.src.transformers3.tokenization_electra import ElectraTokenizer
+
+# from DPR.dpr.utils.data_utils import Tensorizer
+from DPR.dpr.utils.data_utils import Tensorizer
 from .biencoder import BiEncoder
 from .reader import Reader
 

@@ -125,7 +125,7 @@ class ReformerConfig(PretrainedConfig):
 
         Example::
 
-            >>> from transformers3 import ReformerModel, ReformerConfig
+            >>> from DPR.transformers3.src.transformers3 import ReformerModel, ReformerConfig
 
             >>> # Initializing a Reformer configuration
             >>> configuration = ReformerConfig()
