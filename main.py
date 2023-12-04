@@ -767,10 +767,10 @@ random.shuffle(short_clues)
 
 def gen_ops(words, cur_ops=list(ops.values()), i=0, depth=1, rec_p=0.3, max_depth=3, exit_p=0.3):
     cur_op = np.random.choice(cur_ops)
+    new_ops = [o for o in adj[cur_op] if o in cur_ops]
     bank = []
     while i < len(words):
-        if np.random.rand() < rec_p and depth < max_depth:
-            new_ops = [o for o in adj[cur_op] if o in cur_ops]
+        if np.random.rand() < rec_p and depth < max_depth and len(new_ops) > 0:
             new_op, i = gen_ops(words, new_ops, i, depth + 1, rec_p, max_depth, exit_p)
             bank.append(new_op)
         else:
@@ -808,16 +808,17 @@ def try_clue(clue, ans):
     return eval_one(defn, ops, ans, log=False), defn, ops
     
 # runs = []
-with open('runs.pkl', 'rb') as f:
-    runs = pickle.load(f)
+with open('runs.json', 'r') as f:
+    runs = json.load(f)
 
 for clue, nondef, defn, ans, sz in short_clues:
     print("Solving clue: " + clue + " (" + ans + ")")
     dpr_cache = {}
     best = (0, None, None)
     tried = []
-    for _ in range(1000):
+    for _ in range(100):
         cur = try_clue(clue, ans)
+        cur = (cur[0], str(cur[1]), str(cur[2]))
         tried.append(cur)
         if cur[0] > best[0]:
             best = cur
@@ -830,7 +831,7 @@ for clue, nondef, defn, ans, sz in short_clues:
         "ans": ans,
         "sz": sz,
         "best": best,
-        "tried": tried,
+        "tried": tried
     })
     with open('runs.json', 'w') as f:
         json.dump(runs, f)
