@@ -27,8 +27,9 @@ from copy import deepcopy
 
 import load
 import models
-# import random
+import random
 import pickle
+import json
 
 import re
 import itertools
@@ -108,10 +109,17 @@ def get_container_partitions(source, cnt = 2):
             partitions.append([source[:i] + source[j:], source[i:j]])
     return partitions
 
+# dpr = models.setup_closedbook(0)
+# with open('dpr.pkl', 'wb') as f:
+#     pickle.dump(dpr, f)
+dpr_cache = {}
+# cw_dict = load.load_words(only_ans=True)
+# with open('cw_dict.pkl', 'wb') as f:
+#     pickle.dump(cw_dict, f)
 with open('dpr.pkl', 'rb') as f:
     dpr = pickle.load(f)
-with open('dpr_cache.pkl', 'rb') as f:
-    dpr_cache = pickle.load(f)
+# with open('dpr_cache.pkl', 'rb') as f:
+#     dpr_cache = pickle.load(f)
 with open('cw_dict.pkl', 'rb') as f:
     cw_dict = pickle.load(f)
 
@@ -151,20 +159,23 @@ class Operator:
         else:                       # list of Words and Operators, no change necessary
             pass
         self.bank = bank
-        self.bank0 = bank
+        self.bank0 = deepcopy(bank)
         self.eval_factor = False
         self.factor = 0 # should never be 0
         self.op_type = "Operator"
         
     def __str__(self):
         output = self.op_type + "("
-        for b in self.bank:
+        for b in self.bank0:
             if isinstance(b, str):
                 output += b + ", "
             else:
                 output += str(b) + ", "
         output = output[:-2] + ")"
         return output
+    
+    def __repr__(self):
+        return str(self)
         
     def all_banks(self, i=0):
         if i >= len(self.bank):
@@ -314,7 +325,8 @@ class Anagram(Operator):
         self.options = {}
         for b, b_s in self.all_banks():
             merged = ''.join(b)
-            if not in_dict:
+            # if not in_dict: # waste of time
+            if False:
                 for perm in itertools.permutations(merged):
                     cur = ''.join(perm)
                     if apply_cond(cur, min_len, max_len, fixed, in_dict):
@@ -561,7 +573,10 @@ class Reversal(Operator):
         self.op_type = "Reversal"
         
     def eval_full(self, min_len, max_len, fixed, in_dict):
-        super().eval_full(min_len, max_len, fixed[::-1], in_dict)
+        if fixed:
+            super().eval_full(min_len, max_len, fixed[::-1], in_dict)
+        else:
+            super().eval_full(min_len, max_len, None, in_dict)
         self.options = {}
         for b, b_s in self.all_banks():
             merged = ''.join(b)[::-1]
@@ -635,6 +650,9 @@ class Definition:
     def __str__(self):
         return "Definition(\"" + self.defn + "\")"
     
+    def __repr__(self):
+        return str(self)
+    
     def eval_full(self, min_len, max_len, fixed, in_dict):
         return synonyms(self.defn, min_len, max_len, fixed, in_dict)
     
@@ -664,54 +682,155 @@ def eval_full(part1, part2, ans):
     merged = normalize_dict(merged)
     return merged.get(ans, 0)
 
-def eval_one(part1, part2, ans):
-    print("eval_one(" + str(part1) + ", " + str(part2) + ", \"" + ans + "\")")
+def eval_one(part1, part2, ans, log=True):
+    if log:
+        print("eval_one(" + str(part1) + ", " + str(part2) + ", \"" + ans + "\")")
     start_time = time.time()
     dict1 = part1.eval_one(len(ans), len(ans), None, True, ans)
     dict2 = part2.eval_one(len(ans), len(ans), None, True, ans)
     end_time = time.time()
     term1 = dict1.get(ans, 0)
     term2 = dict2.get(ans, 0)
-    print("Time:", end_time - start_time)
-    print(term1, "*", term2, "=", term1 * term2)    
+    if log:
+        print("Time:", end_time - start_time)
+        print(term1, "*", term2, "=", term1 * term2)    
     return term1 * term2
 
-# Speak about idiot making sense (6)
-# Container([Substitution("Speak") [about], Substitution("idiot")]) [making], Definition("sense"), "sanity"
-eval_one(Container([Substitution("Speak"), Substitution("idiot")]), Definition("sense"), "sanity")
-# Concatenation([Substitution("A long arduous journey, especially one made on foot."), Substitution("chess piece")]), Definition("Walking"), "trekking"
-eval_one(Concatenation([Substitution("A long arduous journey, especially one made on foot."), Substitution("chess piece")]), Definition("Walking"), "trekking")
-# Anagram("to a smart set"), Definition("Provider of social introductions"), "toastmaster"
-eval_one(Anagram("to a smart set"), Definition("Provider of social introductions"), "toastmaster")
-# Anagram("to a smart set"), Definition("Provider of social introductions"), "greeter"
-eval_one(Anagram("to a smart set"), Definition("Provider of social introductions"), "greeter")
-# Odd stuff of Mr. Waugh is set for someone wanting women to vote (10)
-# [Odd] Alternation("stuff of Mr. Waugh is set"), [for] Definition("someone wanting women to vote"), "suffragist"
-eval_one(Alternation("stuff of Mr. Waugh is set"), Definition("someone wanting women to vote"), "suffragist")
-# Outlaw leader managing money (7)
-# Concatenation([Substitution("Outlaw"), Substitution("leader")]), Definition("managing money"), "banking"
-eval_one(Concatenation([Substitution("Outlaw"), Substitution("leader")]), Definition("managing money"), "banking")
-# Country left judgeable after odd losses (8)
-# Definition("Country"), Concatenation([Substitution("left"), Alternation("judgeable")]) [after odd losses], "portugal"
-eval_one(Definition("Country"), Concatenation([Substitution("left"), Alternation("judgeable")]), "portugal")
-# Shade’s a bit circumspect, really (7)
-# Definition("Shade's"), [a bit] Hidden("circumspect, really"), "spectre"
-eval_one(Definition("Shade's"), Hidden("circumspect, really"), "spectre")
-# A bit of god-awful back trouble (3)
-# [A bit of] Reversal([Hidden("god-awful")]) [back], Definition("trouble"), "ado"
-eval_one(Reversal([Hidden("god-awful")]), Definition("trouble"), "ado")
-# Quangos siphoned a certain amount off, creating scandal (6)
-# Hidden("Quangos siphoned") [a certain amount off], Definition("creating scandal"), "gossip"
-eval_one(Hidden("Quangos siphoned"), Definition("creating scandal"), "gossip")
-# Bird is cowardly, about to fly away (5)
-# Definition("Bird"), [is] Hidden([Substitution("cowardly,")]) [about to fly away], "raven"
-eval_one(Definition("Bird"), Hidden([Substitution("cowardly,")]), "raven")
-# As is a less stimulating cup defeat, faced in a bad way (13)
-# Definition("As is a less stimulating cup"), Anagram("defeat, faced in") [a bad way], "decaffeinated"
-eval_one(Definition("As is a less stimulating cup"), Anagram("defeat, faced in"), "decaffeinated")
-# At first, actor needing new identity emulates orphan in musical theatre (5)
-# [At first], Initialism("actor needing new identity emulates"), Definition("orphan in musical theatre"), "annie"
-eval_one(Initialism("actor needing new identity emulates"), Definition("orphan in musical theatre"), "annie")
-# Bird with tips of rich aqua, yellow, black (4)
-# Definition("Bird"), [with tips of] Terminalism("rich aqua, yellow, black"), "hawk"
-eval_one(Definition("Bird"), Terminalism("rich aqua, yellow, black"), "hawk")
+# # Speak about idiot making sense (6)
+# # Container([Substitution("Speak") [about], Substitution("idiot")]) [making], Definition("sense"), "sanity"
+# eval_one(Container([Substitution("Speak"), Substitution("idiot")]), Definition("sense"), "sanity")
+# # Concatenation([Substitution("A long arduous journey, especially one made on foot."), Substitution("chess piece")]), Definition("Walking"), "trekking"
+# eval_one(Concatenation([Substitution("A long arduous journey, especially one made on foot."), Substitution("chess piece")]), Definition("Walking"), "trekking")
+# # Anagram("to a smart set"), Definition("Provider of social introductions"), "toastmaster"
+# eval_one(Anagram("to a smart set"), Definition("Provider of social introductions"), "toastmaster")
+# # Anagram("to a smart set"), Definition("Provider of social introductions"), "greeter"
+# eval_one(Anagram("to a smart set"), Definition("Provider of social introductions"), "greeter")
+# # Odd stuff of Mr. Waugh is set for someone wanting women to vote (10)
+# # [Odd] Alternation("stuff of Mr. Waugh is set"), [for] Definition("someone wanting women to vote"), "suffragist"
+# eval_one(Alternation("stuff of Mr. Waugh is set"), Definition("someone wanting women to vote"), "suffragist")
+# # Outlaw leader managing money (7)
+# # Concatenation([Substitution("Outlaw"), Substitution("leader")]), Definition("managing money"), "banking"
+# eval_one(Concatenation([Substitution("Outlaw"), Substitution("leader")]), Definition("managing money"), "banking")
+# # Country left judgeable after odd losses (8)
+# # Definition("Country"), Concatenation([Substitution("left"), Alternation("judgeable")]) [after odd losses], "portugal"
+# eval_one(Definition("Country"), Concatenation([Substitution("left"), Alternation("judgeable")]), "portugal")
+# # Shade’s a bit circumspect, really (7)
+# # Definition("Shade's"), [a bit] Hidden("circumspect, really"), "spectre"
+# eval_one(Definition("Shade's"), Hidden("circumspect, really"), "spectre")
+# # A bit of god-awful back trouble (3)
+# # [A bit of] Reversal([Hidden("god-awful")]) [back], Definition("trouble"), "ado"
+# eval_one(Reversal([Hidden("god-awful")]), Definition("trouble"), "ado")
+# # Quangos siphoned a certain amount off, creating scandal (6)
+# # Hidden("Quangos siphoned") [a certain amount off], Definition("creating scandal"), "gossip"
+# eval_one(Hidden("Quangos siphoned"), Definition("creating scandal"), "gossip")
+# # Bird is cowardly, about to fly away (5)
+# # Definition("Bird"), [is] Hidden([Substitution("cowardly,")]) [about to fly away], "raven"
+# eval_one(Definition("Bird"), Hidden([Substitution("cowardly,")]), "raven")
+# # As is a less stimulating cup defeat, faced in a bad way (13)
+# # Definition("As is a less stimulating cup"), Anagram("defeat, faced in") [a bad way], "decaffeinated"
+# eval_one(Definition("As is a less stimulating cup"), Anagram("defeat, faced in"), "decaffeinated")
+# # At first, actor needing new identity emulates orphan in musical theatre (5)
+# # [At first], Initialism("actor needing new identity emulates"), Definition("orphan in musical theatre"), "annie"
+# eval_one(Initialism("actor needing new identity emulates"), Definition("orphan in musical theatre"), "annie")
+# # Bird with tips of rich aqua, yellow, black (4)
+# # Definition("Bird"), [with tips of] Terminalism("rich aqua, yellow, black"), "hawk"
+# eval_one(Definition("Bird"), Terminalism("rich aqua, yellow, black"), "hawk")
+
+ops = {
+    "Alternation": Alternation,
+    "Anagram": Anagram,
+    "Concatenation": Concatenation,
+    "Container": Container,
+    "Hidden": Hidden,
+    "Initialism": Initialism,
+    "Reversal": Reversal,
+    "Substitution": Substitution,
+    "Terminalism": Terminalism,
+}
+
+adj = {
+    Alternation: [Anagram, Concatenation, Container, Hidden, Initialism, Reversal, Substitution, Terminalism],
+    Anagram: [Alternation, Concatenation, Container, Hidden, Initialism, Reversal, Substitution, Terminalism],
+    Concatenation: [Alternation, Anagram, Container, Hidden, Initialism, Reversal, Substitution, Terminalism],
+    Container: [Alternation, Anagram, Concatenation, Hidden, Initialism, Reversal, Substitution, Terminalism],
+    Hidden: [Alternation, Anagram, Concatenation, Container, Initialism, Reversal, Substitution, Terminalism],
+    Initialism: [Alternation, Anagram, Concatenation, Container, Hidden, Reversal, Substitution, Terminalism],
+    Reversal: [Alternation, Anagram, Concatenation, Container, Hidden, Initialism, Substitution, Terminalism],
+    Substitution: [Alternation, Anagram, Concatenation, Container, Hidden, Initialism, Reversal, Terminalism],
+    Terminalism: [Alternation, Anagram, Concatenation, Container, Hidden, Initialism, Reversal, Substitution],
+}
+
+short_clues = load.load_data()
+short_clues = [c for c in short_clues if len(c[0].split()) <= 4 and len(c[0].split()) >= 2]
+print(len(short_clues))
+random.shuffle(short_clues)
+
+def gen_ops(words, cur_ops=list(ops.values()), i=0, depth=1, rec_p=0.3, max_depth=3, exit_p=0.3):
+    cur_op = np.random.choice(cur_ops)
+    bank = []
+    while i < len(words):
+        if np.random.rand() < rec_p and depth < max_depth:
+            new_ops = [o for o in adj[cur_op] if o in cur_ops]
+            new_op, i = gen_ops(words, new_ops, i, depth + 1, rec_p, max_depth, exit_p)
+            bank.append(new_op)
+        else:
+            bank.append({words[i]: 1})
+            i += 1
+        if np.random.rand() < exit_p and depth > 1:
+            break
+        if cur_op == Container and len(bank) == 2:
+            break
+    while cur_op == Container and len(bank) == 1:
+        cur_op = np.random.choice(cur_ops)
+    if depth == 1:
+        return cur_op(bank)
+    else:
+        return cur_op(bank), i
+
+def gen_all(clue, del_p=0.1):
+    words = clue.split()
+    defn_len = np.random.randint(-len(words) + 2, len(words))
+    if defn_len <= 0:
+        defn_len -= 1
+        defn = ' '.join(words[defn_len:])
+        nondefn = words[:defn_len]
+    else:
+        defn = ' '.join(words[:defn_len])
+        nondefn = words[defn_len:]
+    tmp = []
+    while len(tmp) == 0:
+        tmp = [w for w in nondefn if np.random.rand() > del_p]
+    nondefn = tmp
+    return Definition(defn), gen_ops(nondefn)
+
+def try_clue(clue, ans):
+    defn, ops = gen_all(clue)
+    return eval_one(defn, ops, ans, log=False), defn, ops
+    
+# runs = []
+with open('runs.pkl', 'rb') as f:
+    runs = pickle.load(f)
+
+for clue, nondef, defn, ans, sz in short_clues:
+    print("Solving clue: " + clue + " (" + ans + ")")
+    dpr_cache = {}
+    best = (0, None, None)
+    tried = []
+    for _ in range(1000):
+        cur = try_clue(clue, ans)
+        tried.append(cur)
+        if cur[0] > best[0]:
+            best = cur
+    print(best)
+    print()
+    runs.append({
+        "clue": clue,
+        "nondef": nondef,
+        "defn": defn,
+        "ans": ans,
+        "sz": sz,
+        "best": best,
+        "tried": tried,
+    })
+    with open('runs.json', 'w') as f:
+        json.dump(runs, f)
