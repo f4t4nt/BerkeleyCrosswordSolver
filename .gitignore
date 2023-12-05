@@ -3,6 +3,6 @@ checkpoints/
 logs/
 __pycache__/
 demo/*.json
-# 285/
+285_copy/
 *.pkl
 *.prof
