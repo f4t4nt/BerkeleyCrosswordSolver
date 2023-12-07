@@ -8,7 +8,7 @@
                 "america backed and abandoned",
                 "us backed and abandoned",
                 "su and abandoned",
-                "su and",
+                "su dan",
                 "sudan"
             ]
         },
@@ -1219,16 +1219,16 @@
                 "with tips of rich aqua yellow black",
                 "hawk"
             ]
-        }        
+        },
         {
             "clue": "is cowardly about to fly away",
             "definition": "bird",
             "length": 5,
             "steps": [
-		        "is cowardly about to fly away",
+                "is cowardly about to fly away",
                 "cowardly about to fly away",
-		        "craven about to fly away",
-		        "raven"
+                "craven about to fly away",
+                "raven"
             ]
         },
         {
@@ -1301,7 +1301,7 @@
                 "say about idiot making",
                 "say about idiot",
                 "say about nit",
-		        "sanity"
+                "sanity"
             ]
         }
     ]
