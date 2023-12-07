@@ -3,10 +3,6 @@ import os
 import os
 import sys
 
-print(os.getcwd())
-sys.path.append(os.getcwd())
-assert os.path.exists("cs285/agents/soft_actor_critic.py")
-
 # from cs285.agents.soft_actor_critic import SoftActorCritic
 # from cs285.infrastructure.replay_buffer import ReplayBuffer
 from soft_actor_critic import SoftActorCritic
@@ -19,7 +15,7 @@ import gym
 import numpy as np
 import torch
 # from cs285.infrastructure import pytorch_util as ptu
-from pytorch_util import ptu
+import pytorch_util as ptu
 import tqdm
 
 # from cs285.infrastructure import utils
@@ -163,7 +159,8 @@ def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config_file", "-cfg", type=str, required=True)
+    # parser.add_argument("--config_file", "-cfg", type=str, required=True)
+    parser.add_argument("--config_file", "-cfg", type=str, default="285_final/hw3/sanity_invertedpendulum_reinforce.yaml")
 
     parser.add_argument("--eval_interval", "-ei", type=int, default=5000)
     parser.add_argument("--num_eval_trajectories", "-neval", type=int, default=10)
