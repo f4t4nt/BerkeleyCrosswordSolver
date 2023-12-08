@@ -926,39 +926,36 @@ class DPRForCrossword(object):
             self.all_passages_inv = {}
             for key, value in self.all_passages.items():
                 self.all_passages_inv[value.lower()] = int(key)
-                
+                    
         if self.embeddings == None:
             self.embeddings = []
-            
+                    
             import pickle
             for i in range(4):
                 with open("./checkpoints/biencoder/embeddings/embeddings.json_"+str(i)+".pkl", "rb") as f:
                     self.embeddings.extend(pickle.load(f))
             for i in range(len(self.embeddings)):
                 self.embeddings[i] = self.embeddings[i][1]
-
-        questions_tensor = self.retriever.generate_question_vectors(questions)
-        # answer_vec= np.empty((1, self.retriever.index.index.d), dtype='float32')
-        # answer_vec1= np.empty((1, self.retriever.index.index.d), dtype='float32')
-        # Call the reconstruct method
-        if not answer in self.all_passages_inv:
-            return None
-        answer_id = self.all_passages_inv[answer]
-        answer_vec = self.embeddings[answer_id]
-        # self.retriever.index.index.reconstruct(answer_id, answer_vec[0])
-        # scores, indexes = self.retriever.index.index.search(questions_tensor.numpy(), 500000)
-        # db_ids = [[self.retriever.index.index_id_to_db_id[i] for i in query_top_idxs] for query_top_idxs in indexes]
-        # preds = [list(map(self.all_passages.get, db_ids[i])) for i in range(len(db_ids))]
-        # for i, pred in enumerate(preds):
-        #     for j, p in enumerate(pred):
-        #         if p == "JUSTTESTING":
-        #             print(scores[i][j])
-        #             self.retriever.index.index.reconstruct(int(indexes[i][j]), answer_vec1[0])
-        # print(answer_vec)
-        # print(answer_vec1)
-        # print()
-        # hopefully_correct = questions_tensor.numpy() @ answer_vec1.T
-        return (questions_tensor.numpy() @ answer_vec.T).squeeze()
+                
+        if isinstance(answer, str):
+            questions_tensor = self.retriever.generate_question_vectors(questions)
+            if not answer in self.all_passages_inv:
+                return None
+            answer_id = self.all_passages_inv[answer]
+            answer_vec = self.embeddings[answer_id]
+            return (questions_tensor.numpy() @ answer_vec.T).squeeze()
+        else:
+            assert(len(questions) == len(answer))
+            questions_tensor = self.retriever.generate_question_vectors(questions)
+            answer_vecs = []
+            for a in answer:
+                if not a in self.all_passages_inv:
+                    answer_vecs.append(np.zeros(768))
+                else:
+                    answer_id = self.all_passages_inv[a]
+                    answer_vecs.append(self.embeddings[answer_id])
+            answer_vecs = np.stack(answer_vecs)
+            return (questions_tensor.numpy() * answer_vecs).sum(axis=1)
 
 
     # def get_wikipedia_docs(self, questions, max_docs):

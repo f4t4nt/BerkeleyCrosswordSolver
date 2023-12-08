@@ -95,13 +95,13 @@ def sac_config(
     def make_env(render: bool = False):
         return RecordEpisodeStatistics(
             ClipAction(
-                RescaleAction(
-                    gym.make(
-                        env_name, render_mode="single_rgb_array" if render else None
-                    ),
-                    -1,
-                    1,
-                )
+                # RescaleAction(
+                #     gym.make(
+                #         env_name, render_mode="single_rgb_array" if render else None
+                #     ),
+                #     -1,
+                #     1,
+                # )
             )
         )
 

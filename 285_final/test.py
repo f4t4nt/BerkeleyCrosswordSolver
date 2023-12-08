@@ -77,6 +77,7 @@ test_qs = test_qs * 100
 start_time = time.time()
 # print(vec[0])
 tmp = dpr.get_scores(test_qs, "justtesting")
+tmp2 = dpr.get_scores(test_qs, ["justtesting"] * len(test_qs))
 end_time = time.time()
 print(end_time - start_time)
 print(tmp)
