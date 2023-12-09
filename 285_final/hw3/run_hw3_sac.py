@@ -25,29 +25,16 @@ from logger import Logger
 
 from scripting_utils import make_logger, make_config
 
-from cryptic_dataset import CrypticDataset
+# from cryptic_dataset import CrypticDataset
 
 import argparse
-import json
+import re
 
+from crossword_env import CrosswordEnv
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../"))
-import models
+from load import load_data
 
-dpr = models.setup_closedbook(0)
-def reward_function(currents, targets):
-    score = dpr.get_scores(currents, targets)
-    for i, s in enumerate(currents):
-        score += (len(s) - len(targets[i])) ** 2
-    for i, s in enumerate(currents):
-        alpha_c = np.zeros(26)
-        for c in s:
-            alpha_c[ord(c) - ord('a')] += 1
-        for c in targets[i]:
-            alpha_c[ord(c) - ord('a')] -= 1
-        score += np.sum(alpha_c ** 2)
-    return score
-
-def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace, train_data: CrypticDataset, test_data: CrypticDataset):
+def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace, env_data, eval_data):
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     ptu.init_gpu(use_gpu=not args.no_gpu, gpu_id=args.which_gpu)
@@ -58,7 +45,8 @@ def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace, tr
     # render_env = config["make_env"](render=True)
     #####################
 
-    ep_len = config["ep_len"] or env.spec.max_episode_steps
+    # ep_len = config["ep_len"] or env.spec.max_episode_steps
+    ep_len = 1000 # TODO: change as needed
     batch_size = config["batch_size"] or batch_size
 
     # USELESS ###########
@@ -70,13 +58,26 @@ def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace, tr
     #####################
 
     # initialize agent
-    agent = SoftActorCritic(
-        **config["agent_kwargs"],
-    )
+    # agent = SoftActorCritic(
+    #     **config["agent_kwargs"],
+    # )
 
-    replay_buffer = ReplayBuffer(config["replay_buffer_capacity"])
+    # replay_buffer = ReplayBuffer(config["replay_buffer_capacity"])
+
+    env = CrosswordEnv(env_data)
+    eval_env = CrosswordEnv(eval_data)
 
     observation = env.reset()
+    
+    test_actions = env.obs_str
+    # append random words to the end of each string
+    import random
+    import string
+    for i, s in enumerate(test_actions):
+        test_actions[i] = s + " " + " ".join([random.choice(string.ascii_lowercase) for _ in range(10)])
+    tokenized = env.tokenizer(test_actions, padding=True, truncation=True, return_tensors="pt").input_ids.cuda()
+    next_observation, reward, done, info = env.step(tokenized)
+    print(next_observation)
 
     for step in tqdm.trange(config["total_steps"], dynamic_ncols=True):
         action = agent.get_action(observation)
@@ -87,12 +88,13 @@ def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace, tr
             action=action,
             reward=reward,
             next_observation=next_observation,
-            done=done and not info.get("TimeLimit.truncated", False),
+            # done=done and not info.get("TimeLimit.truncated", False),
+            done=done,
         )
 
         if done:
-            logger.log_scalar(info["episode"]["r"], "train_return", step)
-            logger.log_scalar(info["episode"]["l"], "train_ep_len", step)
+            # logger.log_scalar(info["episode"]["r"], "train_return", step)
+            # logger.log_scalar(info["episode"]["l"], "train_ep_len", step)
             observation = env.reset()
         else:
             observation = next_observation
@@ -117,45 +119,26 @@ def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace, tr
                     logger.log_scalars
                 logger.flush()
 
-        if step % args.eval_interval == 0:
-            trajectories = utils.sample_n_trajectories(
-                eval_env, #TODO: do stuff from eval environment
-                policy=agent,
-                ntraj=args.num_eval_trajectories,
-                max_length=ep_len,
-            )
-            returns = [t["episode_statistics"]["r"] for t in trajectories]
-            ep_lens = [t["episode_statistics"]["l"] for t in trajectories]
+        # if step % args.eval_interval == 0:
+        #     trajectories = utils.sample_n_trajectories(
+        #         eval_env, #TODO: do stuff from eval environment
+        #         policy=agent,
+        #         ntraj=args.num_eval_trajectories,
+        #         max_length=ep_len,
+        #     )
+        #     returns = [t["episode_statistics"]["r"] for t in trajectories]
+        #     ep_lens = [t["episode_statistics"]["l"] for t in trajectories]
 
-            logger.log_scalar(np.mean(returns), "eval_return", step)
-            logger.log_scalar(np.mean(ep_lens), "eval_ep_len", step)
+        #     logger.log_scalar(np.mean(returns), "eval_return", step)
+        #     logger.log_scalar(np.mean(ep_lens), "eval_ep_len", step)
 
-            if len(returns) > 1:
-                logger.log_scalar(np.std(returns), "eval/return_std", step)
-                logger.log_scalar(np.max(returns), "eval/return_max", step)
-                logger.log_scalar(np.min(returns), "eval/return_min", step)
-                logger.log_scalar(np.std(ep_lens), "eval/ep_len_std", step)
-                logger.log_scalar(np.max(ep_lens), "eval/ep_len_max", step)
-                logger.log_scalar(np.min(ep_lens), "eval/ep_len_min", step)
-
-            # USELESS ###########
-            # if args.num_render_trajectories > 0:
-            #     video_trajectories = utils.sample_n_trajectories(
-            #         render_env,
-            #         agent,    
-            #         args.num_render_trajectories,
-            #         ep_len,   
-            #         render=True,
-            #     )             
-                                
-            #     logger.log_paths_as_videos(
-            #         video_trajectories,
-            #         step,     
-            #         fps=fps,  
-            #         max_videos_to_save=args.num_render_trajectories,
-            #         video_title="eval_rollouts",
-            #     )             
-            ####################
+        #     if len(returns) > 1:
+        #         logger.log_scalar(np.std(returns), "eval/return_std", step)
+        #         logger.log_scalar(np.max(returns), "eval/return_max", step)
+        #         logger.log_scalar(np.min(returns), "eval/return_min", step)
+        #         logger.log_scalar(np.std(ep_lens), "eval/ep_len_std", step)
+        #         logger.log_scalar(np.max(ep_lens), "eval/ep_len_max", step)
+        #         logger.log_scalar(np.min(ep_lens), "eval/ep_len_min", step)
 
 
 def main():
@@ -179,14 +162,35 @@ def main():
     config = make_config(args.config_file)
     logger = make_logger(logdir_prefix, config)
 
-    with open("bruteforce.json", "r") as f:
-        data = json.load(f)
-    data = data["data"]
-    train_data = CrypticDataset(data[:100])
-    test_data = CrypticDataset(data[100:])
+    # with open("bruteforce.json", "r") as f:
+    #     data = json.load(f)
+    # data = data["data"]
+    # train_data = CrypticDataset(data[:100])
+    # test_data = CrypticDataset(data[100:])
+    
+    def clean_string(s):
+        return re.sub(r'[^a-zA-Z0-9\s]', '', s).lower()
+    
+    def has_digit(s):
+        return any(c.isdigit() for c in s)
+    
+    data = load_data(randomize=True)
+    # data = [(d[1], d[2], d[3], int(d[4])) for d in data if
+    data = [(clean_string(d[1]), clean_string(d[2]), clean_string(d[3]), int(d[4])) for d in data if
+            len(d[1]) > 0 and
+            len(d[2]) > 0 and
+            len(d[3]) > 0 and
+            len(d[4]) > 0 and
+            not has_digit(d[1]) and
+            not has_digit(d[2]) and
+            not has_digit(d[3]) and
+            d[3].count(' ') == 0 and
+            d[4].isdigit()
+        ]
+    env_data = data[:int(len(data) * 0.8)]
+    eval_data = data[int(len(data) * 0.8):]
 
-    run_training_loop(config, logger, args, train_data, test_data)
-
+    run_training_loop(config, logger, args, env_data, eval_data)
 
 if __name__ == "__main__":
     main()

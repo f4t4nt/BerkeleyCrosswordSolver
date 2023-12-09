@@ -12,9 +12,11 @@ from typing import Dict, Tuple, List
 ############################################
 ############################################
 
+from crossword_env import CrosswordEnv
 
 def sample_trajectory(
-    env: gym.Env, policy: MLPPolicy, max_length: int, render: bool = False
+    # env: gym.Env, policy: MLPPolicy, max_length: int, render: bool = False
+    env: CrosswordEnv, policy: MLPPolicy, max_length: int, render: bool = False
 ) -> Dict[str, np.ndarray]:
     """Sample a rollout in the environment from a policy."""
     ob = env.reset()

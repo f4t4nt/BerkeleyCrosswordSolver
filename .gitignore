@@ -7,3 +7,4 @@ demo/*.json
 output/
 *.pkl
 *.prof
+*.bin

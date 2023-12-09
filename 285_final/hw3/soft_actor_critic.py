@@ -1,5 +1,6 @@
 from typing import Callable, Optional, Sequence, Tuple
 import copy
+from transformers import AutoTokenizer, TrainingArguments, Trainer, AutoModelForCausalLM
 
 import torch
 from torch import nn
@@ -12,12 +13,10 @@ import pytorch_util as ptu
 class SoftActorCritic(nn.Module):
     def __init__(
         self,
-        make_actor: Callable[[Tuple[int, ...], int], nn.Module],
         make_actor_optimizer: Callable[[torch.nn.ParameterList], torch.optim.Optimizer],
         make_actor_schedule: Callable[
             [torch.optim.Optimizer], torch.optim.lr_scheduler._LRScheduler
         ],
-        make_critic: Callable[[Tuple[int, ...], int], nn.Module],
         make_critic_optimizer: Callable[
             [torch.nn.ParameterList], torch.optim.Optimizer
         ],
@@ -57,21 +56,27 @@ class SoftActorCritic(nn.Module):
             target_update_period is not None or soft_target_update_rate is not None
         ), "Must specify either target_update_period or soft_target_update_rate"
 
-        self.actor = ... #load gpt model
+        assert torch.cuda.is_available()
+        self.device = torch.device("cuda")
+        self.actor = torch.load("285_final/hw3/finetuned_gpt.bin").to(self.device)
         self.actor_optimizer = make_actor_optimizer(self.actor.parameters())
         self.actor_lr_scheduler = make_actor_schedule(self.actor_optimizer)
 
+        critic1 = torch.load("285_final/hw3/finetuned_gpt.bin").to(self.device)
+        critic1.lm_head = nn.Linear(in_features=768, out_features=1, bias=False).to(self.device)
         self.critics = nn.ModuleList(
             [
-                ... #load gpt model
+                critic1 #load gpt model
             ]
         )
 
         self.critic_optimizer = make_critic_optimizer(self.critics.parameters())
         self.critic_lr_scheduler = make_critic_schedule(self.critic_optimizer)
+        target_critic1 = torch.load("285_final/hw3/finetuned_gpt.bin").to(self.device)
+        target_critic1.lm_head = nn.Linear(in_features=768, out_features=1, bias=False).to(self.device)
         self.target_critics = nn.ModuleList(
             [
-                ... #load gpt model
+                target_critic1 #load gpt model
             ]
         )
         self.update_target_critic()
@@ -105,14 +110,14 @@ class SoftActorCritic(nn.Module):
         """
         Compute the (ensembled) Q-values for the given state-action pair.
         """
-        return torch.stack([critic(state_action) for critic in self.critics], dim=0)
+        return torch.stack([critic(state_action).logits[:,-1,:].squeeze() for critic in self.critics], dim=0)
 
     def target_critic(self, state_action: torch.Tensor) -> torch.Tensor:
         """
         Compute the (ensembled) target Q-values for the given state-action pair.
         """
         return torch.stack(
-            [critic(state_action) for critic in self.target_critics], dim=0
+            [critic(state_action).logits[:,-1,:].squeeze() for critic in self.target_critics], dim=0
         )
 
     def q_backup_strategy(self, next_qs: torch.Tensor) -> torch.Tensor:
