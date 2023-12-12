@@ -63,12 +63,11 @@ class ReplayBuffer:
                 (self.max_size, *next_observation.shape), dtype=next_observation.dtype
             )
             self.dones = np.empty((self.max_size, *done.shape), dtype=done.dtype)
-
         assert observation.shape == self.observations.shape[1:]
         assert action.shape == self.actions.shape[1:]
-        assert reward.shape == ()
+        #assert reward.shape == ()
         assert next_observation.shape == self.next_observations.shape[1:]
-        assert done.shape == ()
+        #assert done.shape == ()
 
         self.observations[self.size % self.max_size] = observation
         self.actions[self.size % self.max_size] = action

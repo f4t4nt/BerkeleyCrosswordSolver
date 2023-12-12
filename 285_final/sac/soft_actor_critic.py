@@ -1,6 +1,6 @@
 from typing import Callable, Optional, Sequence, Tuple
 import copy
-from transformers import AutoTokenizer, TrainingArguments, Trainer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
 import torch
 from torch import nn
@@ -9,6 +9,8 @@ import numpy as np
 # import cs285.infrastructure.pytorch_util as ptu
 import pytorch_util as ptu
 
+tokenizer = AutoTokenizer.from_pretrained("gpt2")
+tokenizer.pad_token = tokenizer.eos_token
 
 class SoftActorCritic(nn.Module):
     def __init__(
@@ -91,20 +93,18 @@ class SoftActorCritic(nn.Module):
         self.num_critic_updates = num_critic_updates
         self.soft_target_update_rate = soft_target_update_rate
         self.backup_entropy = backup_entropy
-        self.max_length = 60
+        self.max_length = 75
         self.critic_loss = nn.MSELoss()
 
         self.update_target_critic()
 
-    def get_action(self, observation: np.ndarray) -> np.ndarray:
+    def get_action(self, observation):
         """
         Compute the action for a given observation.
         """
         with torch.no_grad():
-            observation = ptu.from_numpy(observation)[None]
-
             action, _ = self.get_actions(observation)
-            return ptu.to_numpy(action).squeeze(0)
+        return action
 
     def critic(self, state_action: torch.Tensor) -> torch.Tensor:
         """
@@ -253,7 +253,7 @@ class SoftActorCritic(nn.Module):
         log_probs = []
         state_actions = []
         for i in range(batch_size):
-            input_ids = torch.stack(num_samples*[obs[i][obs[i]!=self.tokenizer.eos_token_id]]).squeeze()
+            input_ids = torch.stack(num_samples*[obs[i][obs[i]!=tokenizer.eos_token_id]])
             log_probs1 = torch.zeros(num_samples).cuda()
             for _ in range(self.max_length-input_ids.shape[1]):
                 # Generate the next token
@@ -261,7 +261,7 @@ class SoftActorCritic(nn.Module):
                 softmax_probs = torch.softmax(logits, dim=-1)
                 distribution = torch.distributions.Categorical(probs=softmax_probs)
                 next_token = distribution.sample()
-                log_probs1 += torch.log(softmax_probs.gather(1,next_token.unsqueeze(0)).squeeze())
+                log_probs1 += torch.where(next_token==tokenizer.eos_token_id & input_ids[:, -1]==tokenizer.eos_token_id, 0, torch.log(softmax_probs.gather(1,next_token.unsqueeze(0)).squeeze()))
                 input_ids = torch.cat([input_ids, next_token.unsqueeze(1)], dim=-1)
             log_probs.append(log_probs1)
             state_actions.append(input_ids)

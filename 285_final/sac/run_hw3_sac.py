@@ -1,6 +1,4 @@
 import os
-
-import os
 import sys
 
 # from cs285.agents.soft_actor_critic import SoftActorCritic
@@ -11,7 +9,7 @@ from replay_buffer import ReplayBuffer
 import os
 import time
 
-import gym
+# import gym
 import numpy as np
 import torch
 # from cs285.infrastructure import pytorch_util as ptu
@@ -29,6 +27,7 @@ from scripting_utils import make_logger, make_config
 
 import argparse
 import re
+import pickle
 
 from crossword_env import CrosswordEnv
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../"))
@@ -58,41 +57,40 @@ def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace, en
     #####################
 
     # initialize agent
-    # agent = SoftActorCritic(
-    #     **config["agent_kwargs"],
-    # )
+    agent = SoftActorCritic(
+        **config["agent_kwargs"],
+    )
 
-    # replay_buffer = ReplayBuffer(config["replay_buffer_capacity"])
+    replay_buffer = ReplayBuffer(config["replay_buffer_capacity"])
 
     env = CrosswordEnv(env_data)
     eval_env = CrosswordEnv(eval_data)
 
     observation = env.reset()
     
-    test_actions = env.obs_str
-    # append random words to the end of each string
-    import random
-    import string
-    for i, s in enumerate(test_actions):
-        test_actions[i] = s + " " + " ".join([random.choice(string.ascii_lowercase) for _ in range(10)])
-    tokenized = env.tokenizer(test_actions, padding=True, truncation=True, return_tensors="pt").input_ids.cuda()
-    next_observation, reward, done, info = env.step(tokenized)
-    print(next_observation)
+    # test_actions = env.obs_str
+    # import random
+    # import string
+    # for i, s in enumerate(test_actions):
+    #     test_actions[i] = s + " " + " ".join([random.choice(string.ascii_lowercase) for _ in range(10)])
+    # tokenized = env.tokenizer(test_actions, padding=True, truncation=True, return_tensors="pt").input_ids.cuda()
+    # next_observation, reward, done, info = env.step(tokenized)
+    # print(next_observation)
 
     for step in tqdm.trange(config["total_steps"], dynamic_ncols=True):
-        action = agent.get_action(observation)
+        action = agent.get_action(ptu.from_numpy(observation))
 
         next_observation, reward, done, info = env.step(action) # TODO: calculate reward
         replay_buffer.insert(
             observation=observation,
-            action=action,
+            action=action.cpu().numpy(),
             reward=reward,
             next_observation=next_observation,
             # done=done and not info.get("TimeLimit.truncated", False),
             done=done,
         )
 
-        if done:
+        if np.all(done):
             # logger.log_scalar(info["episode"]["r"], "train_return", step)
             # logger.log_scalar(info["episode"]["l"], "train_ep_len", step)
             observation = env.reset()
@@ -119,6 +117,10 @@ def run_training_loop(config: dict, logger: Logger, args: argparse.Namespace, en
                     logger.log_scalars
                 logger.flush()
 
+        if step > 0 and step % 1000 == 0:
+          torch.save(agent.actor, "actor.bin")
+          torch.save(agent.critics[0], "critic.bin")
+          torch.save(agent.target_critics[0], "target_critic.bin")
         # if step % args.eval_interval == 0:
         #     trajectories = utils.sample_n_trajectories(
         #         eval_env, #TODO: do stuff from eval environment
@@ -174,21 +176,31 @@ def main():
     def has_digit(s):
         return any(c.isdigit() for c in s)
     
-    data = load_data(randomize=True)
-    # data = [(d[1], d[2], d[3], int(d[4])) for d in data if
-    data = [(clean_string(d[1]), clean_string(d[2]), clean_string(d[3]), int(d[4])) for d in data if
-            len(d[1]) > 0 and
-            len(d[2]) > 0 and
-            len(d[3]) > 0 and
-            len(d[4]) > 0 and
-            not has_digit(d[1]) and
-            not has_digit(d[2]) and
-            not has_digit(d[3]) and
-            d[3].count(' ') == 0 and
-            d[4].isdigit()
-        ]
+    # data = load_data(randomize=True)
+    # data = [(clean_string(d[1]), clean_string(d[2]), clean_string(d[3]), int(d[4])) for d in data if
+    #         len(d[1]) > 0 and
+    #         len(d[2]) > 0 and
+    #         len(d[3]) > 0 and
+    #         len(d[4]) > 0 and
+    #         not has_digit(d[1]) and
+    #         not has_digit(d[2]) and
+    #         not has_digit(d[3]) and
+    #         d[3].count(' ') == 0 and
+    #         d[4].isdigit()
+    #     ]
+    # with open("285_final/data.pkl", "wb") as f:
+    #     pickle.dump(data, f)
+    with open("285_final/data.pkl", "rb") as f:
+        data = pickle.load(f)
     env_data = data[:int(len(data) * 0.8)]
     eval_data = data[int(len(data) * 0.8):]
+    
+    easy_data = [d for d in data if d[0].count(' ') < 3]
+    med_data = [d for d in data if d[0].count(' ') >= 3 and d[0].count(' ') < 5]
+    hard_data = [d for d in data if d[0].count(' ') >= 5]
+    
+    env_data = easy_data[:int(len(easy_data) * 0.8)]
+    eval_data = easy_data[int(len(easy_data) * 0.8):]
 
     run_training_loop(config, logger, args, env_data, eval_data)
 

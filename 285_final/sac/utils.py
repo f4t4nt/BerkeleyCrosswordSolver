@@ -3,8 +3,7 @@ import numpy as np
 import copy
 # from cs285.networks.mlp_policy import MLPPolicy
 from mlp_policy import MLPPolicy
-import gym
-import cv2
+# import gym
 # from cs285.infrastructure import pytorch_util as ptu
 import pytorch_util as ptu
 from typing import Dict, Tuple, List
@@ -15,7 +14,7 @@ from typing import Dict, Tuple, List
 from crossword_env import CrosswordEnv
 
 def sample_trajectory(
-    # env: gym.Env, policy: MLPPolicy, max_length: int, render: bool = False
+    # env, policy: MLPPolicy, max_length: int, render: bool = False
     env: CrosswordEnv, policy: MLPPolicy, max_length: int, render: bool = False
 ) -> Dict[str, np.ndarray]:
     """Sample a rollout in the environment from a policy."""
@@ -24,19 +23,6 @@ def sample_trajectory(
     steps = 0
 
     while True:
-        # render an image
-        if render:
-            if hasattr(env, "sim"):
-                img = env.sim.render(camera_name="track", height=500, width=500)[::-1]
-            else:
-                img = env.render(mode="rgb_array")
-            
-            if isinstance(img, list):
-                img = img[0]
-
-            image_obs.append(
-                cv2.resize(img, dsize=(250, 250), interpolation=cv2.INTER_CUBIC)
-            )
 
         # TODO use the most recent ob to decide what to do
         ac = policy.get_action(ob)
@@ -46,7 +32,7 @@ def sample_trajectory(
 
         # TODO rollout can end due to done, or due to max_length
         steps += 1
-        rollout_done = done or steps > max_length  # HINT: this is either 0 or 1
+        rollout_done = np.all(done) or steps > max_length  # HINT: this is either 0 or 1
 
         # record result of taking that action
         obs.append(ob)
@@ -79,7 +65,7 @@ def sample_trajectory(
 
 
 def sample_trajectories(
-    env: gym.Env,
+    env,
     policy: MLPPolicy,
     min_timesteps_per_batch: int,
     max_length: int,
@@ -99,7 +85,7 @@ def sample_trajectories(
 
 
 def sample_n_trajectories(
-    env: gym.Env, policy: MLPPolicy, ntraj: int, max_length: int, render: bool = False
+    env, policy: MLPPolicy, ntraj: int, max_length: int, render: bool = False
 ):
     """Collect ntraj rollouts."""
     trajs = []

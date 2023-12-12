@@ -1,6 +1,6 @@
 from typing import Tuple, Optional
 
-import gym
+# import gym
 
 import numpy as np
 import torch
@@ -13,10 +13,6 @@ from mlp_policy import MLPPolicy
 from state_action_value_critic import StateActionCritic
 import pytorch_util as ptu
 
-from gym.wrappers.rescale_action import RescaleAction
-from gym.wrappers.clip_action import ClipAction
-from gym.wrappers.record_episode_statistics import RecordEpisodeStatistics
-
 
 def sac_config(
     env_name: str,
@@ -25,9 +21,9 @@ def sac_config(
     num_layers: int = 3,
     actor_learning_rate: float = 3e-4,
     critic_learning_rate: float = 3e-4,
-    total_steps: int = 300000,
+    total_steps: int = 30000,
     random_steps: int = 5000,
-    training_starts: int = 10000,
+    training_starts: int = 1000,
     batch_size: int = 128,
     replay_buffer_capacity: int = 1000000,
     ep_len: Optional[int] = None,
@@ -37,7 +33,7 @@ def sac_config(
     soft_target_update_rate: Optional[float] = None,
     # Actor-critic configuration
     actor_gradient_type="reinforce",  # One of "reinforce" or "reparametrize"
-    num_actor_samples: int = 1,
+    num_actor_samples: int = 5,
     num_critic_updates: int = 1,
     # Settings for multiple critics
     num_critic_networks: int = 1,

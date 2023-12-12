@@ -1323,7 +1323,7 @@ finetune_data = {
 finetune_data = finetune_data["data"]
 
 class CrypticDataset(Dataset):
-    PROMPT = "Find the next state to solve the cryptic crossword. Do not stop unless state has the right LENGTH. DEFINITION {definition} LENGTH {length} {stop} CLUE {clue} | STEPS {steps} STATE {state}\n\nNEXTSTATE {next_state}"
+    PROMPT = PROMPT = "Find the next state to solve the cryptic crossword. Do not stop unless state has the right LENGTH. DEFINITION {definition} LENGTH {length} {stop} CLUE {clue} | STEPS {steps} STATE {state}\n\nNEXTSTATE {next_state}"
 
     def __init__(self, data, tokenizer):
         self.data = data
