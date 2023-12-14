@@ -21,7 +21,7 @@ class CrosswordEnv():
         self.tokenizer = tokenizer # TODO: delete
         self.full_data = data
         self.BATCH_SIZE = 20
-        self.PROMPT = PROMPT = "Find the next state to solve the cryptic crossword. Do not stop unless state has the right LENGTH. DEFINITION {definition} LENGTH {length} {stop} CLUE {clue} | STEPS {steps} STATE {state}\n\nNEXTSTATE"
+        self.PROMPT = "Find the next state to solve the cryptic crossword. Do not stop unless state has the right LENGTH. DEFINITION {definition} LENGTH {length} {stop} CLUE {clue} | STEPS {steps} STATE {state}\n\nNEXTSTATE"
     
     def get_reward(self):
         # definition similarity
